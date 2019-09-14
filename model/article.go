@@ -21,7 +21,7 @@ type publish struct {
 
 type product struct {
 	mainProduct *productDetails
-	subProducts [] string
+	subProducts []string
 	details     string
 }
 

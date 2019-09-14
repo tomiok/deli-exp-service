@@ -5,7 +5,7 @@ import "deli/exp-service/model"
 type Spec interface {
 	SaveWarehouse() string
 	IndexDocument() string
-	Search() [] *model.ArticleResponse
+	Search() []*model.ArticleResponse
 	SearchById(uid string) *model.ArticleResponse
 }
 

@@ -7,5 +7,7 @@ func routes(mux *chi.Mux) {
 	mux.Route("/experiences", func(router chi.Router) {
 		router.Post("/", createExpHandler)
 		router.Get("/{expId}", getExpByIdHandler)
+		router.Get("/search/{category}", getByCategoryHandler)
+		router.Get("/search", getByNgramHandler)
 	})
 }

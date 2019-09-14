@@ -6,8 +6,8 @@ LDFLAGS=-ldflags "-X main.Version=${VERSION}"
 
 
 build:
-	go build ${LDFLAGS} -o ${BINARY} cmd/web/*.go
+	go build ${LDFLAGS} -o ${BINARY} cmd/web/main/*.go
 
 web:
 	@clear
-	@go run cmd/web/!(*_test).go -E dev
+	@go run cmd/web/main/!(*_test).go -E dev

@@ -2,38 +2,39 @@ package models
 
 import "time"
 
-type Article struct {
-	uid       string
-	title     string
-	subtitle  string
-	body      string
-	tags      *tags
-	product   *product
-	city      string
-	country   string
-	published publish
+type ExperiencePost struct {
+	Uid       string   `json:"uid"`
+	Title     string   `json:"title"`
+	Subtitle  string   `json:"subtitle"`
+	Body      string   `json:"body"`
+	Tags      *Tags    `json:"tags"`
+	Product   *Product `json:"product"`
+	Published *Publish `json:"published"`
 }
 
-type publish struct {
-	date   time.Time
-	author string // uid
+type Publish struct {
+	Date   time.Time `json:"date"`
+	Author string    `json:"author"` //uid
 }
 
-type product struct {
-	mainProduct *productDetails
-	subProducts []string
-	details     string
+type Product struct {
+	MainProduct *MainProductDetails `json:"main_product"`
+	SubProducts []string            `json:"sub_products"`
+	Details     string              `json:"details"`
 }
 
-type productDetails struct {
-	name string
-	year int
+type MainProductDetails struct {
+	Name    string `json:"name"`
+	Year    int    `json:"year"`
+	City    string `json:"city"`
+	Country string `json:"country"`
 }
 
-type tags struct {
-	tag []string
+type Tags struct {
+	Tags []string `json:"tags"`
 }
 
+// API response
 type ArticleResponse struct {
 	Title       string    `json:"title"`
 	Subtitle    string    `json:"subtitle"`

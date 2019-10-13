@@ -2,16 +2,19 @@ package datastore
 
 import (
 	"database/sql"
-	"github.com/labstack/gommon/log"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/labstack/gommon/log"
 )
 
-type MysqlDS struct {
-	*sql.DB
-
+type SQLGateway interface {
+	Save()
 }
 
-func NewMysqlDS(source string) (*MysqlDS, error) {
+type SQLClient struct {
+	*sql.DB
+}
+
+func NewMysqlDS(source string) (*SQLClient, error) {
 
 	connection, err := sql.Open("mysql", source)
 
@@ -20,5 +23,14 @@ func NewMysqlDS(source string) (*MysqlDS, error) {
 		return nil, err
 	}
 
-	return &MysqlDS{DB: connection}, nil
+	return &SQLClient{connection}, nil
+}
+
+func (sqlClient *SQLClient) Save() {
+	tx, err := sqlClient.Begin()
+
+	if err != nil {
+
+	}
+	_ = tx.Commit()
 }

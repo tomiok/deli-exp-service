@@ -1,12 +1,12 @@
 package engine
 
-import "deli/exp-service/model"
+import "github.com/deli/exp-service/models"
 
 type Spec interface {
 	SaveWarehouse() string
 	IndexDocument() string
-	Search() []*model.ArticleResponse
-	SearchById(uid string) *model.ArticleResponse
+	Search() []*models.ArticleResponse
+	SearchById(uid string) *models.ArticleResponse
 }
 
 type Engine struct {

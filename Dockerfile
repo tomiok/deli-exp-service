@@ -4,8 +4,8 @@ ARG app_env
 
 ENV ENV $app_env
 
-COPY . /go/src/deli/exp-service
-WORKDIR /go/src/deli/exp-service
+COPY . /go/srcgithub.com/deli/exp-service
+WORKDIR /go/srcgithub.com/deli/exp-service
 
 RUN make build
 

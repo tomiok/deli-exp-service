@@ -5,6 +5,7 @@ import (
 	"github.com/deli/exp-service/commons/logs"
 	"github.com/deli/exp-service/engine"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,6 +14,10 @@ import (
 
 func newMux(e engine.Spec) *chi.Mux {
 	mux := chi.NewRouter()
+
+	mux.Use(
+		middleware.Heartbeat("/ping"),
+	)
 
 	mux.Route("/experiences", func(router chi.Router) {
 		router.Post("/", createExpHandler)

@@ -1,8 +1,12 @@
 package main
 
-const port = ":8081"
+import "github.com/deli/exp-service/commons/logs"
+
+const port = "8081"
 
 func main() {
+	logs.InitDefault()
+	srv := NewServer(nil, port)
 
-
+	srv.Start()
 }

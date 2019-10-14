@@ -1,9 +1,13 @@
 package main
 
 import (
+	"context"
+	"github.com/deli/exp-service/commons/logs"
 	"github.com/deli/exp-service/engine"
 	"github.com/go-chi/chi"
 	"net/http"
+	"os"
+	"os/signal"
 	"time"
 )
 
@@ -40,13 +44,30 @@ type server struct {
 
 // Start runs ListenAndServe on the http.Server with graceful shutdown
 func (srv *server) Start() {
-	srv.l.Info("Starting server...")
+	logs.Info("Starting server...")
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			srv.l.Fatal("Could not listen on", zap.String("addr", srv.Addr), zap.Error(err))
+			logs.Fatalf("Could not listen on %s due to %s", srv.Addr, err.Error())
 		}
 	}()
-	srv.l.Info("Server is ready to handle requests", zap.String("addr", srv.Addr))
-	srv.gracefullShutdown()
+	logs.Infof("Server is ready to handle requests %s", srv.Addr)
+	srv.gracefulShutdown()
+}
+
+func (srv *server) gracefulShutdown() {
+	quit := make(chan os.Signal, 1)
+
+	signal.Notify(quit, os.Interrupt)
+	sig := <-quit
+	logs.Infof("Server is shutting down %s", sig.String())
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	srv.SetKeepAlivesEnabled(false)
+	if err := srv.Shutdown(ctx); err != nil {
+		logs.Fatalf("Could not gracefully shutdown the server %s", err.Error())
+	}
+	logs.Info("Server stopped")
 }

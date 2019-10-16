@@ -2,12 +2,13 @@ package datastore
 
 import (
 	"database/sql"
+	"github.com/deli/exp-service/models"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/gommon/log"
 )
 
 type SQLGateway interface {
-	Save()
+	Save(exp models.ExperiencePost) (string, error)
 }
 
 type SQLClient struct {
@@ -26,7 +27,7 @@ func NewMysqlDS(source string) (*SQLClient, error) {
 	return &SQLClient{connection}, nil
 }
 
-func (sqlClient *SQLClient) Save() {
+func (sqlClient *SQLClient) Save(exp models.ExperiencePost) (string, error) {
 	tx, err := sqlClient.Begin()
 
 	if err != nil {

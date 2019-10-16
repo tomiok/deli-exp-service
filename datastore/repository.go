@@ -1,7 +1,12 @@
 package datastore
 
+import (
+	"errors"
+	"github.com/deli/exp-service/models"
+)
+
 type ExperienceSQLRepository interface {
-	SaveWarehouse()
+	SaveWarehouse(exp models.ExperiencePost) (string, error)
 }
 
 type ExperienceDocumentRepository interface {
@@ -21,8 +26,14 @@ type DocumentRepository struct {
 	DC DocIndexClient
 }
 
-func (sqlRepo *SqlRepository) SaveWarehouse() {
-	sqlRepo.Save()
+func (sqlRepo *SqlRepository) SaveWarehouse(exp models.ExperiencePost) (string, error) {
+	uid, err := sqlRepo.Save(exp)
+
+	if err != nil {
+		return "", errors.New("cannot save experience, " + err.Error())
+	}
+
+	return uid, nil
 }
 
 func (docClient *DocumentRepository) IndexDocument() {

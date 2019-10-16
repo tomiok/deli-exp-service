@@ -17,8 +17,7 @@ type Engine struct {
 }
 
 func (e *Engine) SaveWarehouse(exp models.ExperiencePost) (string, error) {
-	e.ExperienceRepository.SaveWarehouse()
-	return "", nil
+	return e.ExperienceRepository.SaveWarehouse(exp)
 }
 
 func (e *Engine) IndexDocument() error {

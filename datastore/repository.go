@@ -27,6 +27,8 @@ type DocumentRepository struct {
 }
 
 func (sqlRepo *SqlRepository) SaveWarehouse(exp models.ExperiencePost) (string, error) {
+
+	//TODO map here model based struct to SQL based struct
 	uid, err := sqlRepo.Save(exp)
 
 	if err != nil {

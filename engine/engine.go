@@ -6,8 +6,8 @@ import (
 )
 
 type Spec interface {
-	SaveWarehouse() string
-	IndexDocument() string
+	SaveWarehouse(exp models.ExperiencePost) (string, error)
+	IndexDocument() error
 	Search() []*models.ArticleResponse
 	SearchById(uid string) *models.ArticleResponse
 }
@@ -16,12 +16,12 @@ type Engine struct {
 	datastore.ExperienceRepository
 }
 
-func (e *Engine) SaveWarehouse() string {
+func (e *Engine) SaveWarehouse() (string, error) {
 	e.ExperienceRepository.SaveWarehouse()
-	return ""
+	return "", nil
 }
 
-func (e *Engine) IndexDocument() string {
+func (e *Engine) IndexDocument() error {
 	e.ExperienceRepository.IndexDocument()
-	return ""
+	return nil
 }

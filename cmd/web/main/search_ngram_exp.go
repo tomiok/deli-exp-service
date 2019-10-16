@@ -2,6 +2,6 @@ package main
 
 import "net/http"
 
-func getByNgramHandler(writer http.ResponseWriter, request *http.Request) {
+func getByNgramHandler(w http.ResponseWriter, r *http.Request) {
 
 }

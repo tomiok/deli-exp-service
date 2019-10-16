@@ -16,6 +16,9 @@ func newMux(e engine.Spec) *chi.Mux {
 	mux := chi.NewRouter()
 
 	mux.Use(
+		middleware.Logger,
+		middleware.RequestID,
+		middleware.Recoverer,
 		middleware.Heartbeat("/ping"),
 	)
 

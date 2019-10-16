@@ -23,8 +23,10 @@ func newMux(e engine.Spec) *chi.Mux {
 	)
 
 	mux.Route("/experiences", func(router chi.Router) {
-		router.Post("/", createExpHandler)
-		router.Get("/{expId}", getExpByIdHandler)
+		router.Post("/", func(w http.ResponseWriter, r *http.Request) {
+			createExpHandler(e, w, r)
+		})
+		router.Get("/{expId}", getExpByIDHandler)
 		router.Get("/search/{category}", getByCategoryHandler)
 		router.Get("/search", getByNgramHandler)
 	})

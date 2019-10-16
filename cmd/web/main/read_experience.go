@@ -2,6 +2,6 @@ package main
 
 import "net/http"
 
-func getExpByIdHandler(w http.ResponseWriter, r *http.Request) {
+func getExpByIDHandler(w http.ResponseWriter, r *http.Request) {
 
 }

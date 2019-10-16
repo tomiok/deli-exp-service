@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"database/sql"
+	"errors"
 	"github.com/deli/exp-service/models"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/gommon/log"
@@ -31,7 +32,13 @@ func (sqlClient *SQLClient) Save(exp models.ExperiencePost) (string, error) {
 	tx, err := sqlClient.Begin()
 
 	if err != nil {
-
+		return "", errors.New("cannot create transaction " + err.Error())
 	}
+
+	//stmt, err := tx.Prepare()
+	//date
+
 	_ = tx.Commit()
+
+	return "", nil
 }

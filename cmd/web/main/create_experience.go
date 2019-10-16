@@ -12,7 +12,7 @@ func createExpHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
 	var exp models.ExperiencePost
 	_ = json.NewDecoder(r.Body).Decode(&exp)
 	uid, _ := uuid.NewUUID()
-	exp.Uid = uid.String()
+	exp.UID = uid.String()
 	s, err := e.SaveWarehouse(exp)
 
 	if err != nil {

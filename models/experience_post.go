@@ -3,10 +3,10 @@ package models
 import "time"
 
 type ExperiencePost struct {
-	Uid       string   `json:"uid"`
-	Title     string   `json:"title"`
-	Subtitle  string   `json:"subtitle"`
-	Body      string   `json:"body"`
+	UID       string  `json:"uid"`
+	Title     string  `json:"title"`
+	Subtitle  string  `json:"subtitle"`
+	Body      string  `json:"body"`
 	Tags      Tags    `json:"tags"`
 	Product   Product `json:"product"`
 	Published Publish `json:"published"`
@@ -19,8 +19,8 @@ type Publish struct {
 
 type Product struct {
 	MainProduct MainProductDetails `json:"main_product"`
-	SubProducts []string            `json:"sub_products"`
-	Details     string              `json:"details"`
+	SubProducts []string           `json:"sub_products"`
+	Details     string             `json:"details"`
 }
 
 type MainProductDetails struct {

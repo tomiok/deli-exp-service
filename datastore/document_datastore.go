@@ -5,7 +5,6 @@ type DocIndexClient interface {
 }
 
 type DocumentClient struct {
-
 }
 
 func (d *DocumentClient) Index() {

@@ -18,16 +18,15 @@ type Publish struct {
 }
 
 type Product struct {
-	MainProduct MainProductDetails `json:"main_product"`
-	SubProducts []string           `json:"sub_products"`
-	Details     string             `json:"details"`
+	Product ProductDetails `json:"product"`
+	Details string         `json:"details"`
 }
 
-type MainProductDetails struct {
-	Name    string `json:"name"`
-	Year    int    `json:"year"`
-	City    string `json:"city"`
-	Country string `json:"country"`
+type ProductDetails struct {
+	Name    string    `json:"name"`
+	Date    time.Time `json:"date"`
+	City    string    `json:"city"`
+	Country string    `json:"country"`
 }
 
 type Tags struct {

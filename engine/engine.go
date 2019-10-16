@@ -16,12 +16,20 @@ type Engine struct {
 	datastore.ExperienceRepository
 }
 
-func (e *Engine) SaveWarehouse() (string, error) {
+func (e *Engine) SaveWarehouse(exp models.ExperiencePost) (string, error) {
 	e.ExperienceRepository.SaveWarehouse()
 	return "", nil
 }
 
 func (e *Engine) IndexDocument() error {
 	e.ExperienceRepository.IndexDocument()
+	return nil
+}
+
+func (e *Engine) Search() []*models.ArticleResponse {
+	return nil
+}
+
+func (e *Engine) SearchById(uid string) *models.ArticleResponse {
 	return nil
 }

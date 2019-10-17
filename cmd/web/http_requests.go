@@ -43,8 +43,8 @@ func (er *ExperienceRequest) ToModel() models.ExperiencePost {
 		Tags:     tags,
 		Product:  product,
 		Published: models.Publish{
-			Date:   time.Now(),
-			Author: er.AuthorUID,
+			Date:      time.Now(),
+			AuthorUID: er.AuthorUID,
 		},
 	}
 }

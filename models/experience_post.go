@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 type ExperiencePost struct {
 	UID       string  `json:"uid"`
@@ -13,8 +16,8 @@ type ExperiencePost struct {
 }
 
 type Publish struct {
-	Date   time.Time `json:"date"`
-	Author string    `json:"author"` //uid
+	Date      time.Time `json:"date"`
+	AuthorUID string    `json:"author"` //uid
 }
 
 type Product struct {
@@ -27,7 +30,12 @@ type Product struct {
 }
 
 type Tags struct {
+	UID  string   `json:"uid"`
 	Tags []string `json:"tags"`
+}
+
+func (t *Tags) CsvValues() string {
+	return strings.Join(t.Tags, ",")
 }
 
 // API response

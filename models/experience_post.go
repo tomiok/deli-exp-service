@@ -18,15 +18,12 @@ type Publish struct {
 }
 
 type Product struct {
-	Product ProductDetails `json:"product"`
-	Details string         `json:"details"`
-}
-
-type ProductDetails struct {
+	UID     string    `json:"uid"`
 	Name    string    `json:"name"`
 	Date    time.Time `json:"date"`
 	City    string    `json:"city"`
 	Country string    `json:"country"`
+	Details string    `json:"details"`
 }
 
 type Tags struct {
@@ -35,6 +32,7 @@ type Tags struct {
 
 // API response
 type ArticleResponse struct {
+	UID         string    `json:"uid"`
 	Title       string    `json:"title"`
 	Subtitle    string    `json:"subtitle"`
 	Body        string    `json:"body"`

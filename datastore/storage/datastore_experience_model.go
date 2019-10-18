@@ -45,7 +45,7 @@ func FromProduct(post models.ExperiencePost) *SQLExperienceDTO {
 			Subtitle:   post.Subtitle,
 			Body:       post.Body,
 			Date:       post.Published.Date,
-			TagsUID:    "", //TODO finish this
+			TagsUID:    post.Tags.UID,
 			AuthorUID:  post.Published.AuthorUID,
 			ProductUID: post.Product.UID,
 			PhotoURL:   "", //TODO finish this
@@ -55,11 +55,12 @@ func FromProduct(post models.ExperiencePost) *SQLExperienceDTO {
 			tags: post.Tags.CsvValues(),
 		},
 		SQLProduct: SQLProduct{
-			Name:    "",
-			Details: "",
-			Date:    time.Time{},
-			City:    "",
-			Country: "",
+			UID:     post.Product.UID,
+			Name:    post.Product.Name,
+			Details: post.Product.Details,
+			Date:    post.Product.Date,
+			City:    post.Product.City,
+			Country: post.Product.Country,
 		},
 	}
 }

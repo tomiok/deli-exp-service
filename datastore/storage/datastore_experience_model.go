@@ -7,8 +7,8 @@ import (
 
 type SQLExperienceDTO struct {
 	SQLExperiencePost
-	SQLTags
-	SQLProduct
+	SqlTags    SQLTags
+	SqlProduct SQLProduct
 }
 
 type SQLExperiencePost struct {
@@ -25,7 +25,7 @@ type SQLExperiencePost struct {
 
 type SQLTags struct {
 	UID  string
-	tags string
+	Tags string
 }
 
 type SQLProduct struct {
@@ -50,11 +50,11 @@ func FromProduct(post models.ExperiencePost) *SQLExperienceDTO {
 			ProductUID: post.Product.UID,
 			PhotoURL:   "", //TODO finish this
 		},
-		SQLTags: SQLTags{
+		SqlTags: SQLTags{
 			UID:  post.Tags.UID,
-			tags: post.Tags.CsvValues(),
+			Tags: post.Tags.CsvValues(),
 		},
-		SQLProduct: SQLProduct{
+		SqlProduct: SQLProduct{
 			UID:     post.Product.UID,
 			Name:    post.Product.Name,
 			Details: post.Product.Details,

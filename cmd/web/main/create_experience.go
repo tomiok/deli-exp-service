@@ -9,7 +9,7 @@ import (
 func (h *specHandler) createExpHandler(w http.ResponseWriter, r *http.Request) {
 	var exp web.ExperienceRequest
 	_ = json.NewDecoder(r.Body).Decode(&exp)
-	s, err := specification.SaveWarehouse(exp.ToModel())
+	s, err := h.engine.SaveWarehouse(exp.ToModel())
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

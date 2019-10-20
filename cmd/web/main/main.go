@@ -7,7 +7,7 @@ import (
 
 const (
 	port   = "8081"
-	dbPath = "%s:%s@tcp(%s:3306)/deli_users?parseTime=true"
+	dbPath = "%s:%s@tcp(%s:3306)/deli_experiences?parseTime=true"
 )
 
 func main() {

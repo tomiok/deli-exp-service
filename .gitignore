@@ -2,3 +2,4 @@
 exp-service
 vendor
 bin/
+.DS_Store

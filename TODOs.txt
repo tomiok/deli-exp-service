@@ -1,0 +1,3 @@
+add pointers is model-request-sql mapping
+use nil when foreign are not presents
+better format in rest response

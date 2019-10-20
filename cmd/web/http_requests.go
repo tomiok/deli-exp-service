@@ -8,12 +8,12 @@ import (
 
 //TODO add all the DTOs to map with json request here
 type ExperienceRequest struct {
-	Title     string         `json:"title"`
-	Subtitle  string         `json:"subtitle"`
-	Body      string         `json:"body"`
-	AuthorUID string         `json:"author_uid"`
-	Product   ProductRequest `json:"product"`
-	Tags      []string       `json:"tags"`
+	Title     string          `json:"title"`
+	Subtitle  string          `json:"subtitle"`
+	Body      string          `json:"body"`
+	AuthorUID string          `json:"author_uid"`
+	Product   *ProductRequest `json:"product"`
+	Tags      []string        `json:"tags"`
 }
 
 type ProductRequest struct {
@@ -25,14 +25,20 @@ type ProductRequest struct {
 }
 
 func (er *ExperienceRequest) ToModel() models.ExperiencePost {
+	var tags models.Tags
+	var product models.Product
+	if er.Tags != nil {
+		tags = models.Tags{Tags: er.Tags}
+	}
 
-	tags := models.Tags{Tags: er.Tags}
-	product := models.Product{
-		Name:    er.Product.ProductName,
-		Date:    time.Now(), //TODO parse this if the product is older. Now is not coming from the client
-		City:    er.Product.City,
-		Country: er.Product.Country,
-		Details: er.Product.Details,
+	if er.Product != nil {
+		product = models.Product{
+			Name:    er.Product.ProductName,
+			Date:    time.Now(), //TODO parse this if the product is older. Now is not coming from the client
+			City:    er.Product.City,
+			Country: er.Product.Country,
+			Details: er.Product.Details,
+		}
 	}
 
 	return models.ExperiencePost{

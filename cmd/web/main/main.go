@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/deli/exp-service/commons/logs"
 	"github.com/deli/exp-service/engine"
 )
@@ -12,7 +13,7 @@ const (
 
 func main() {
 	logs.InitDefault()
-	e := engine.New(dbPath)
+	e := engine.New(fmt.Sprintf(dbPath, "root", "root", "localhost"))
 
 	srv := NewServer(&specHandler{e}, port)
 

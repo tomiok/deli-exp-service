@@ -36,11 +36,11 @@ func (sqlClient *SQLClient) Save(exp *storage.ExperienceDTO) (string, error) {
 		return "", errors.New("cannot create transaction " + err.Error())
 	}
 
-	tags := exp.SqlTags
-	product := exp.SqlProduct
+	//tags := exp.SqlTags
+	//product := exp.SqlProduct
 	experience := exp.SQLExperiencePost
-	err = inTransactionTags(tx, &tags)
-	err = inTransactionProduct(tx, &product)
+	//	err = inTransactionTags(tx, &tags)
+	//err = inTransactionProduct(tx, &product)
 	err = inTransactionExperience(tx, &experience)
 
 	if err != nil {
@@ -72,8 +72,8 @@ func inTransactionExperience(tx *sql.Tx, exp *storage.SQLExperiencePost) error {
 		exp.Body,
 		exp.Date,
 		exp.AuthorUID,
-		exp.TagUID,
-		exp.ProductUID,
+		nil,
+		nil,
 		exp.PhotoURL)
 
 	if err != nil {
@@ -111,7 +111,7 @@ func inTransactionProduct(tx *sql.Tx, product *storage.SQLProduct) error {
 }
 
 func inTransactionTags(tx *sql.Tx, tags *storage.SQLTags) error {
-	stmt, err := tx.Prepare("insert into tags (uid, csv_tags) values(?,?)")
+	stmt, err := tx.Prepare("insert into tag (uid, csv_tags) values(?,?)")
 
 	if err != nil {
 		return err

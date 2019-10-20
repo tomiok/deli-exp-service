@@ -12,7 +12,11 @@ import (
 	"time"
 )
 
-func newMux(e engine.Spec) *chi.Mux {
+type specHandler struct {
+	engine engine.Spec
+}
+
+func newMux(handler *specHandler) *chi.Mux {
 	mux := chi.NewRouter()
 
 	mux.Use(
@@ -23,9 +27,7 @@ func newMux(e engine.Spec) *chi.Mux {
 	)
 
 	mux.Route("/experiences", func(router chi.Router) {
-		router.Post("/", func(w http.ResponseWriter, r *http.Request) {
-			createExpHandler(e, w, r)
-		})
+		router.Post("/", handler.createExpHandler)
 		router.Get("/{expId}", getExpByIDHandler)
 		router.Get("/search/{category}", getByCategoryHandler)
 		router.Get("/search", getByNgramHandler)
@@ -34,8 +36,8 @@ func newMux(e engine.Spec) *chi.Mux {
 	return mux
 }
 
-func NewServer(e engine.Spec, listenAdd string) *server {
-	mux := newMux(e)
+func NewServer(handler *specHandler, listenAdd string) *server {
+	mux := newMux(handler)
 
 	s := &http.Server{
 		Addr:         ":" + listenAdd,

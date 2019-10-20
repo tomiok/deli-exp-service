@@ -17,7 +17,7 @@ type SQLClient struct {
 	*sql.DB
 }
 
-func NewMysqlDS(source string) (*SQLClient, error) {
+func NewMysqlClient(source string) (*SQLClient, error) {
 
 	connection, err := sql.Open("mysql", source)
 

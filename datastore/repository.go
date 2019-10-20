@@ -14,13 +14,8 @@ type ExperienceDocumentRepository interface {
 	IndexDocument()
 }
 
-type ExperienceRepository interface {
-	ExperienceDocumentRepository
-	ExperienceSQLRepository
-}
-
 type SqlRepository struct {
-	SQLGateway
+	SqlGateway SQLGateway
 }
 
 type DocumentRepository struct {
@@ -30,7 +25,7 @@ type DocumentRepository struct {
 func (sqlRepo *SqlRepository) SaveWarehouse(exp models.ExperiencePost) (string, error) {
 	expSQL := storage.FromProduct(exp)
 
-	uid, err := sqlRepo.Save(expSQL)
+	uid, err := sqlRepo.SqlGateway.Save(expSQL)
 
 	if err != nil {
 		return "", errors.New("cannot save experience, " + err.Error())

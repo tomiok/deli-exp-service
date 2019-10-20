@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"errors"
+	"github.com/deli/exp-service/datastore/storage"
 	"github.com/deli/exp-service/models"
 )
 
@@ -27,9 +28,9 @@ type DocumentRepository struct {
 }
 
 func (sqlRepo *SqlRepository) SaveWarehouse(exp models.ExperiencePost) (string, error) {
+	expSQL := storage.FromProduct(exp)
 
-	//TODO map here model based struct to SQL based struct
-	uid, err := sqlRepo.Save(exp)
+	uid, err := sqlRepo.Save(expSQL)
 
 	if err != nil {
 		return "", errors.New("cannot save experience, " + err.Error())

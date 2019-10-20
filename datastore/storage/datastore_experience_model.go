@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type SQLExperienceDTO struct {
+type ExperienceDTO struct {
 	SQLExperiencePost
 	SqlTags    SQLTags
 	SqlProduct SQLProduct
@@ -17,7 +17,7 @@ type SQLExperiencePost struct {
 	Subtitle   string
 	Body       string
 	Date       time.Time
-	TagsUID    string
+	TagUID     string
 	AuthorUID  string
 	ProductUID string
 	PhotoURL   string
@@ -37,15 +37,15 @@ type SQLProduct struct {
 	Country string
 }
 
-func FromProduct(post models.ExperiencePost) *SQLExperienceDTO {
-	return &SQLExperienceDTO{
+func FromProduct(post models.ExperiencePost) *ExperienceDTO {
+	return &ExperienceDTO{
 		SQLExperiencePost: SQLExperiencePost{
 			UID:        post.UID,
 			Title:      post.Title,
 			Subtitle:   post.Subtitle,
 			Body:       post.Body,
 			Date:       post.Published.Date,
-			TagsUID:    post.Tags.UID,
+			TagUID:     post.Tags.UID,
 			AuthorUID:  post.Published.AuthorUID,
 			ProductUID: post.Product.UID,
 			PhotoURL:   "", //TODO finish this

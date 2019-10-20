@@ -10,7 +10,7 @@ import (
 )
 
 type SQLGateway interface {
-	Save(exp storage.SQLExperienceDTO) (string, error)
+	Save(exp *storage.ExperienceDTO) (string, error)
 }
 
 type SQLClient struct {
@@ -29,7 +29,7 @@ func NewMysqlDS(source string) (*SQLClient, error) {
 	return &SQLClient{connection}, nil
 }
 
-func (sqlClient *SQLClient) Save(exp storage.SQLExperienceDTO) (string, error) {
+func (sqlClient *SQLClient) Save(exp *storage.ExperienceDTO) (string, error) {
 	tx, err := sqlClient.Begin()
 
 	if err != nil {
@@ -38,17 +38,52 @@ func (sqlClient *SQLClient) Save(exp storage.SQLExperienceDTO) (string, error) {
 
 	tags := exp.SqlTags
 	product := exp.SqlProduct
+	experience := exp.SQLExperiencePost
+	err = inTransactionTags(tx, &tags)
+	err = inTransactionProduct(tx, &product)
+	err = inTransactionExperience(tx, &experience)
 
-	err := inTransactionTags(tx, &tags)
-	err := inTransactionProduct(tx, &product)
+	if err != nil {
+		logs.Errorf("errors in transaction %s", err.Error())
+		err = tx.Rollback()
+		return "", err
+	}
 
 	_ = tx.Commit()
 
-	return "", nil
+	return experience.UID, nil
 }
 
-func inTransactionExperience(tx *sql.Tx, exp storage.SQLExperiencePost) {
-	
+func inTransactionExperience(tx *sql.Tx, exp *storage.SQLExperiencePost) error {
+	stmt, err := tx.Prepare(`insert into experience_post (uid, title, subtitle, body, date, author_uid, tag_uid,
+                             product_uid, photo_url) values (?,?,?,?,?,?,?,?,?)`)
+	if err != nil {
+		logs.Errorf("cannot prepare statement %s", err.Error())
+		return err
+	}
+
+	defer func() {
+		_ = stmt.Close()
+	}()
+
+	res, err := stmt.Exec(exp.UID,
+		exp.Title,
+		exp.Subtitle,
+		exp.Body,
+		exp.Date,
+		exp.AuthorUID,
+		exp.TagUID,
+		exp.ProductUID,
+		exp.PhotoURL)
+
+	if err != nil {
+		logs.Errorf("cannot execute statement %s", err.Error())
+		return err
+	}
+	rows, err := res.RowsAffected()
+	logs.Infof("rows affected: %d", rows)
+
+	return err
 }
 
 func inTransactionProduct(tx *sql.Tx, product *storage.SQLProduct) error {
